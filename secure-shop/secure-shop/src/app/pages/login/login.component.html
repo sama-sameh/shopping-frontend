@@ -1,0 +1,28 @@
+<section class="login_section layout_padding">
+  <div class="login_container">
+
+
+    <!-- Login Form -->
+    <div class="form login">
+      <header>Login</header>
+      <form
+        (ngSubmit)="onLogin()"
+        #form="ngForm">
+        <input type="email" [(ngModel)]="credentials.username" name="email" placeholder="Enter your email" required />
+        <input type="password" [(ngModel)]="credentials.password" name="password" placeholder="Enter your password" required />
+        <a href="#">Forgot password?</a>
+        <input type="submit" class="button" value="Login" [disabled]="form.invalid" />
+      </form>
+      <div class="signup">
+        <span>Don't have an account?
+
+          <label><a routerLink="/register">Signup</a></label>
+          <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>

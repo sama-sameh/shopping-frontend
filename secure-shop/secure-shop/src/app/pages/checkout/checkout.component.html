@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <title>Document</title>
+<!--  <style>-->
+<!--    -->
+<!--  </style>-->
+</head>
+
+<body>
+<div class="container d-flex justify-content-space-around mt-5 mb-5">
+
+
+
+  <div class="row g-3">
+
+    <div class="col-md-6">
+
+      <h2><span>Payment Method</span></h2>
+      <div class="card">
+
+        <div class="accordion" id="accordionExample">
+
+          <div class="card">
+            <div class="card-header p-0" id="headingTwo">
+              <h2 class="mb-0">
+
+              </h2>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header p-0">
+              <h2 class="mb-0">
+                <button class="btn btn-light btn-block text-left p-3 rounded-0"
+                        data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                        aria-controls="collapseOne">
+                  <div class="d-flex align-items-center justify-content-between">
+
+                    <span>Credit card</span>
+                    <div class="icons">
+                      <img src="https://i.imgur.com/2ISgYja.png" width="30">
+                      <img src="https://i.imgur.com/W1vtnOV.png" width="30">
+                      <img src="https://i.imgur.com/35tC99g.png" width="30">
+                      <img src="https://i.imgur.com/2ISgYja.png" width="30">
+                    </div>
+
+                  </div>
+                </button>
+              </h2>
+            </div>
+
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                 data-parent="#accordionExample">
+              <div class="card-body payment-card-body">
+                <form [formGroup]="paymentForm" (ngSubmit)="placeOrder()">
+                  <span class="font-weight-normal card-text">Card Number</span>
+                  <div class="input">
+                    <i class="fa fa-credit-card"></i>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="0000 0000 0000 0000"
+                           formControlName="cardNumber"
+                           (input)="formatCardNumber($event)">
+                    <div *ngIf="cardNumber?.invalid && (cardNumber?.dirty || cardNumber?.touched)"
+                         class="text-danger small">
+                      <div *ngIf="cardNumber?.errors?.['required']">Card number is required</div>
+                      <div *ngIf="cardNumber?.errors?.['invalidCardNumber']">
+                        Please enter exactly 16 digits (spaces are automatically added)
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mt-3 mb-3">
+                    <div class="col-md-6">
+                      <span class="font-weight-normal card-text">Expiry Date</span>
+                      <div class="input">
+                        <i class="fa fa-calendar"></i>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="MM/YY"
+                               formControlName="expiryDate"
+                               (input)="formatExpiryDate($event)">
+                        <div *ngIf="expiryDate?.invalid && (expiryDate?.dirty || expiryDate?.touched)"
+                             class="text-danger small">
+                          <div *ngIf="expiryDate?.errors?.['required']">Expiry date is required</div>
+                          <div *ngIf="expiryDate?.errors?.['pattern']">Enter valid MM/YY format (e.g., 12/25)</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span class="font-weight-normal card-text">CVC/CVV</span>
+                      <div class="input">
+                        <i class="fa fa-lock"></i>
+                        <input type="text"
+                               class="form-control"
+                               placeholder="000"
+                               formControlName="cvv"
+                               maxlength="3">
+                        <div *ngIf="cvv?.invalid && (cvv?.dirty || cvv?.touched)"
+                             class="text-danger small">
+                          <div *ngIf="cvv?.errors?.['required']">CVV is required</div>
+                          <div *ngIf="cvv?.errors?.['pattern']">Enter exactly 3 digits</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <span class="text-muted certificate-text">
+    <i class="fa fa-lock"></i> Your transaction is secured with SSL certificate
+  </span>
+
+                  <!-- Add your submit button with disabled state -->
+
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-md-5">
+      <div class="right border">
+        <div class="header">Order Summary</div>
+        <p>2 items</p>
+        @for(item of cartItems; track item.productId) {
+          <div class="row item">
+            <div class="col-4 align-self-center">
+<!--              <img class="img-fluid" src="https://i.imgur.com/79M6pU0.png">-->
+</div>
+            <div class="col-8">
+              <div class="row"><b>${{item.price}}</b></div>
+              <div class="row text-muted">{{item.productName}}</div>
+              <div class="row">Quantity:{{item.quantity}}</div>
+            </div>
+          </div>
+        }
+
+        <hr>
+        <div class="row lower">
+          <div class="col text-left">Subtotal</div>
+          <div class="col text-right">${{totalPrice}}</div>
+        </div>
+        <div class="row lower">
+          <div class="col text-left">Delivery</div>
+          <div class="col text-right">$5.0</div>
+        </div>
+        <div class="row lower">
+          <div class="col text-left"><b>Total to pay</b></div>
+          <div class="col text-right"><b>${{totalPrice+5}}</b></div>
+        </div>
+<!--        <button type="submit" class="btn btn-primary" >-->
+<!--          Place Order-->
+<!--        </button>-->
+        <button class="btn free-button"
+                type="submit"
+                [disabled]="paymentForm.invalid"
+                (click)="placeOrder()"
+                >
+          Place order
+        </button>
+        <p class="text-muted text-center">Complimentary Shipping & Returns</p>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet"></script>
+</html>

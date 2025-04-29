@@ -1,0 +1,22 @@
+<section class="login_section layout_padding">
+  <div class="login_container">
+
+<div class="form login">
+  <header>Signup</header>
+  <form
+        (ngSubmit)="onRegister()"
+        #form="ngForm"
+  >
+    <input type="text" placeholder="Enter your username" [(ngModel)]="registerData.username" name="username">
+    <input type="text" placeholder="Enter your email" [(ngModel)]="registerData.email" name="email">
+    <input type="password" placeholder="Create a password" [(ngModel)]="registerData.password" name="password">
+    <input type="submit" class="button" value="Signup">
+  </form>
+  <div class="signup">
+        <span>Already have an account?
+          <label ><a routerLink="/login">Login</a></label>
+        </span>
+  </div>
+</div>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+.cart-button-container {
+  padding: 10px;
+  text-align: center;
+}
+
+.add-to-cart-btn {
+  background-color: #f7444e; /* Red color - change as needed */
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #d6373f; /* Darker shade for hover */
+  transform: translateY(-2px);
+}
+
+.add-to-cart-btn:active {
+  transform: translateY(0);
+}

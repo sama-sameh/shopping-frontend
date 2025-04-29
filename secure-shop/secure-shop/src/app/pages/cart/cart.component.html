@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+</head>
+<body>
+<div class="cart-wrapper">
+  <div class="container">
+    @if (cartItems && cartItems.length > 0) {
+    <div class="row g-4">
+      <!-- Cart Items Section -->
+      <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h4 class="mb-0">Shopping Cart</h4>
+          <span class="text-muted">{{cartItems.length}} items</span>
+        </div>
+
+        <!-- Product Cards -->
+        <div class="d-flex flex-column gap-3">
+          <!-- Product 1 -->
+          @for(item of cartItems; track item.productId) {
+            <div class="product-card p-3 shadow-sm">
+              <div class="row align-items-center">
+                <div class="col-md-2">
+                  <!-- <img src="https://via.placeholder.com/100" alt="Product" class="product-image"> -->
+                </div>
+                <div class="col-md-4">
+                  <h6 class="mb-1">{{item.productName}}</h6>
+                </div>
+                <div class="col-md-3">
+                  <div class="d-flex align-items-center gap-2">
+                    <button class="quantity-btn" (click)="updateQuantity(item, -1)">-</button>
+                    <input type="number" class="quantity-input" [value]="item.quantity" min="1" readonly>
+                    <button class="quantity-btn" (click)="updateQuantity(item, 1)">+</button>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <span class="fw-bold">${{item.price}}</span>
+                </div>
+                <div class="col-md-1">
+                  <i class="bi bi-trash remove-btn" (click)="removeItem(item)"></i>
+                </div>
+              </div>
+            </div>
+          }
+
+        </div>
+      </div>
+
+      <!-- Summary Section -->
+      <div class="col-lg-4">
+        <div class="summary-card p-4 shadow-sm">
+          <h5 class="mb-4">Order Summary</h5>
+
+          <div class="d-flex justify-content-between mb-3">
+            <span class="text-muted">Subtotal</span>
+            <span>${{totalPrice}}</span>
+          </div>
+          <div class="d-flex justify-content-between mb-3">
+            <span class="text-muted">Discount</span>
+            <span class="text-success">$0.0</span>
+          </div>
+          <div class="d-flex justify-content-between mb-3">
+            <span class="text-muted">Shipping</span>
+            <span>$5.00</span>
+          </div>
+          <hr>
+          <div class="d-flex justify-content-between mb-4">
+            <span class="fw-bold">Total</span>
+            <span class="fw-bold">${{totalPrice+5}}</span>
+          </div>
+
+          <!-- Promo Code -->
+<!--          <div class="mb-4">-->
+<!--            <div class="input-group">-->
+<!--              <input type="text" class="form-control" placeholder="Promo code">-->
+<!--              <button class="btn btn-outline-secondary" type="button">Apply</button>-->
+<!--            </div>-->
+<!--          </div>-->
+
+          <button class="btn btn-primary checkout-btn w-100 mb-3" (click)="proceedToCheckout()" >
+            Proceed to Checkout
+          </button>
+
+          <div class="d-flex justify-content-center gap-2">
+            <i class="bi bi-shield-check text-success"></i>
+            <small class="text-muted">Secure checkout</small>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+    @if (cartItems && cartItems.length === 0) {
+      <div class="col-12 text-center py-5">
+        <div class="empty-cart-message">
+          <i class="bi bi-cart-x display-1 text-muted mb-4"></i>
+          <h3 class="mb-3">Your cart is empty</h3>
+          <p class="text-muted mb-4">Looks like you haven't added any items yet</p>
+          <a routerLink="/products" class="btn btn-primary">
+            Start Shopping
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  function updateQuantity(productId, change) {
+    const input = event.target.parentElement.querySelector('.quantity-input');
+    let value = parseInt(input.value) + change;
+    if (value >= 1) {
+      input.value = value;
+    }
+  }
+</script>
+</body>
+</html>

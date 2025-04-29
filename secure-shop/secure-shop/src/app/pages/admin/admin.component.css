@@ -1,0 +1,16 @@
+.modal {
+  position: fixed !important; /* Ensure modal is fixed to the screen */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050 !important; /* Make sure modal stays on top */
+  /*display: block !important;  !* Ensure it's visible *!*/
+}
+.modal {
+
+
+}
+
+/*.modal-backdrop {*/
+/*  z-index: 1040 !important;  !* Ensure the backdrop is below the modal *!*/
+/*}*/
