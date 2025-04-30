@@ -31,7 +31,6 @@ constructor(private cartService: CartService,private authService:AuthService,pri
     this.productService.getAllProducts().subscribe({
       next:(data)=>{
        this.products = data;
-        console.log(this.products);
       }
     })
   }

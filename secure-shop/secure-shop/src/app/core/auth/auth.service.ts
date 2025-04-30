@@ -33,7 +33,7 @@ export class AuthService {
     return this.http.post<RegisterDTO>(`${this.api}/register`, body);
   }
 
-  private handleAuth(res: AuthResponse) {
+  public handleAuth(res: AuthResponse) {
     localStorage.setItem('access', res.token);
     localStorage.setItem('refresh', res.refreshToken);
     localStorage.setItem('role', res.role);
@@ -51,6 +51,9 @@ export class AuthService {
   // Additional helper method
   getCurrentAuthToken(): string | null {
     return localStorage.getItem('access');
+  }
+  getRefreshToken(): string | null {
+    return localStorage.getItem('refresh');
   }
   isLoggedIn(): boolean {
     return !!localStorage.getItem('access');
