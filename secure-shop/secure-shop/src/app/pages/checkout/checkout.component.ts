@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CartDetailDTO} from "../../DTO/CartDetailDTO";
 import {AuthService} from "@core/auth/auth.service";
 import {Router} from "@angular/router";
@@ -25,18 +25,9 @@ export class CheckoutComponent {
   hasExistingCard: boolean = false;
   decryptedCardNumber: string | null = null;
 
-
-  // Regular expressions for validation
-
-
-  // UI state variables
-  isSubmitting: boolean = false;
-  paymentSuccess: boolean = false;
-  paymentError: string | null = null;
-  CardNumber = '';
   paymentForm!: FormGroup;
 
-  constructor(private cartService: CartService, private fb: FormBuilder, private creditcardService: CreditCardService, private decrytion: EncryptionService) {
+  constructor(private cartService: CartService, private fb: FormBuilder, private creditcardService: CreditCardService, private decrytion: EncryptionService,private checkoutService: CheckoutService,private router:Router) {
     this.initializeForm();
     this.getCardNumber();
   }
@@ -54,7 +45,9 @@ export class CheckoutComponent {
   getCardNumber() {
     this.creditcardService.getCardNumber().subscribe({
       next: (cardnumber) => {
+        console.log("EncryptedCardNumber", cardnumber);
         this.decryptedCardNumber = this.decrytion.decrypt(cardnumber);
+        console.log(this.decryptedCardNumber);
         if (this.decryptedCardNumber) {
           this.hasExistingCard = true;
           this.paymentForm.patchValue({
@@ -116,14 +109,43 @@ export class CheckoutComponent {
 
   placeOrder() {
     if (this.paymentForm.valid) {
-      console.log("placrdd")
-    } else {
+      if(!this.hasExistingCard){
+        this.creditcardService.addCard({cvv:this.paymentForm.get('cvv')?.value,encryptedCardNumber:this.paymentForm.get('cardNumber')?.value}).subscribe({
+          next:(data)=>{
+             console.log("Card Details Saved");
+          },
+            error: (cardError) => {
+              console.error('Error saving card details:', cardError);
+            }
+        }
+        )
+      }
+      this.checkoutService.placeOrder().subscribe({
+        next: (orderResponse) => {
+          if(orderResponse){
+            console.log('Order placed successfully');
+            this.paymentForm.reset();
+            this.router.navigate(['/order-success'], {
+              state: { orderDetails: orderResponse }
+            });
+          }
+          else{
+            console.error('Error in placing order:');
+          }
+        },
+        error: (orderError) => {
+          console.error('Error in placing order:', orderError);
+        }
+      });
+    }
+    else {
       this.paymentForm.markAllAsTouched();
     }
   }
 
   ngOnInit(): void {
     this.loadCart();
+
   }
 
   loadCart(): void {
@@ -199,16 +221,5 @@ export class CheckoutComponent {
   //     }
   //   });
   // }
-  // getCardNumber() {
-  //   this.creditcardService.getCardNumber().subscribe({
-  //     next: (cardnumber) => {
-  //       console.log(this.decrytion.decrypt(cardnumber)) ;
-  //       // You can also  call other methods or update UI here
-  //     },
-  //     error: (err) => {
-  //       console.error('Error getting card number:', err);
-  //       // Handle error appropriately
-  //     }
-  //   });
-  // }
+
 }

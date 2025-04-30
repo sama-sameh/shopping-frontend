@@ -32,8 +32,8 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       if (error.status === 401 && refreshToken) {
         return authService.refreshToken(refreshToken).pipe(
           switchMap(response => {
-            console.log("old response",{token:token,refreshToken:refreshToken});
-            console.log("new response", response);
+            console.log("old token",{token:token,refreshToken:refreshToken});
+            console.log("new token", response);
             localStorage.setItem('access', response.token);
             localStorage.setItem('refresh', response.refreshToken);
 

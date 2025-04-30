@@ -45,7 +45,7 @@ export const routes: Routes = [
       {
         path: 'admin',
         loadComponent: () => import('./pages/admin/admin.component').then(m => m.AdminComponent),
-
+        canActivate:[RoleGuard],data:{role:'ADMIN'}
       },
 
       { path: 'order-success', component: OrderSuccessComponent, canActivate:[RoleGuard],data:{role:'USER'}},
