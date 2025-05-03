@@ -26,7 +26,10 @@ export class LoginComponent {
     this.authService.signIn(this.credentials).subscribe({
       next: () => {
         console.log('Logged in!')
-        this.router.navigate(['']);
+        if(this.authService.getUserRole()==="ADMIN")
+           this.router.navigate(['/admin']);
+        else
+          this.router.navigate(['/']);
       },
       error: (err) => {
         console.error('Login failed:', err);

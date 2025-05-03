@@ -19,11 +19,13 @@ export class RegisterComponent {
   registerData:RegisterDTO = {
     username:'',
     password:'',
-    email:''
+    email:'',
+    role:''
   };
   constructor(private authService: AuthService, private router: Router) {}
   onRegister() {
     console.log('Register payload:', this.registerData);
+    this.registerData.role = "USER"
     this.authService.signUp(this.registerData).subscribe({
       next: () => {
         console.log('Signed in!');

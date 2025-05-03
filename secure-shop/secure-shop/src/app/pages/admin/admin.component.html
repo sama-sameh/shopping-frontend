@@ -1,22 +1,374 @@
-<!-- Button to open modal -->
-<button type="button" class="btn btn-primary" (click)="openModal()">
-  Open Modal
-</button>
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- Modal itself -->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal Title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+  <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+
+  <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-YEVcwYpactjlWFCuaE5ivEnrLnVavICHAAMaaYmDD3yQzGXJKjYHcGGcyFDpiUM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <!-- Fonts and icons -->
+  <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+  <script>
+    WebFont.load({
+      google: { families: ["Public Sans:300,400,500,600,700"] },
+      custom: {
+        families: [
+          "Font Awesome 5 Solid",
+          "Font Awesome 5 Regular",
+          "Font Awesome 5 Brands",
+          "simple-line-icons",
+        ],
+        urls: ["../../../assets/css/fonts.min.css"],
+      },
+      active: function () {
+        sessionStorage.fonts = true;
+      },
+    });
+  </script>
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="../../../assets/css/plugins.min.css" />
+  <link rel="stylesheet" href="../../../assets/css/kaiadmin.min.css" />
+
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link rel="stylesheet" href="../../../assets/css/demo.css" />
+</head>
+
+<body>
+    <div class="container">
+      <div class="page-inner">
+        <div class="page-header">
+          <h3 class="fw-bold mb-3" style="margin-bottom: 0px !important;">Main Service</h3>
+        </div>
+        <div class="row" style=" justify-content: center;">
+          <div class="row justify-content-center mt-5 gap-4">
+            <div class="col-md-3" style="width: 30% !important;">
+
+              <a href="" (click)="showCard($event)">
+              <div class="card card-stats card-round">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div class="icon-big text-center icon-primary bubble-shadow-small">
+                          <i class="fas fa-box-open"></i>
+                        </div>
+                      </div>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <h4 class="card-title">Add Product</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-md-3" style="width: 30% !important;">
+              <a href="" (click)="showUserCard($event)">
+                <div class="card card-stats card-round">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col-icon">
+                        <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                          <i class="fas fa-user"></i>
+                        </div>
+                      </div>
+                      <div class="col col-stats ms-3 ms-sm-0">
+                        <div class="numbers">
+                          <h4 class="card-title">Add User</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="page-header">
+            <h3 class="fw-bold mb-3" style="margin-bottom: 0px !important;">Important Statistics</h3>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 col-md-3">
+              <div class="card card-stats card-round">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-icon">
+                      <div class="icon-big text-center icon-primary bubble-shadow-small">
+                        <i class="fas fa-users"></i>
+                      </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="numbers">
+                        <p class="card-category">Users</p>
+                        <h4 class="card-title">{{dashBoard.no_of_users}}</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="card card-stats card-round">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-icon">
+                      <div class="icon-big text-center icon-info bubble-shadow-small">
+                        <i class="far fa-check-circle"></i>
+                      </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="numbers">
+                        <p class="card-category">Orders</p>
+                        <h4 class="card-title">{{dashBoard.no_of_orders}}</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+              <div class="card card-stats card-round">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-icon">
+                      <div class="icon-big text-center icon-success bubble-shadow-small">
+                        <i class="fas fa-luggage-cart"></i>
+                      </div>
+                    </div>
+                    <div class="col col-stats ms-3 ms-sm-0">
+                      <div class="numbers">
+                        <p class="card-category">Products</p>
+                        <h4 class="card-title">{{dashBoard.no_of_products}}</h4>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row" style="margin-top: 20px;">
+            <div class="col-md-8">
+              <div class="card card-round">
+                <div class="card-header">
+                  <div class="card-head-row card-tools-still-right">
+                    <div class="card-title">Orders History</div>
+                    <div class="card-tools">
+                      <div class="dropdown">
+                        <button class="btn btn-icon btn-clean me-0" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#">Action</a>
+                          <a class="dropdown-item" href="#">Another action</a>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center mb-0">
+                      <thead class="thead-light">
+                      <tr>
+                        <th scope="col">Orders ID</th>
+                        <th scope="col" class="text-end">Date & Time</th>
+                        <th scope="col" class="text-end">Amount</th>
+                        <th scope="col" class="text-end">Status</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        @for(order of orders; track order.id) {
+                          <tr>
+                            <th scope="row">
+                             {{order.id}}
+                            </th>
+                            <td class="text-end">{{order.createdAt | date: 'dd/MM/yyyy'}}</td>
+                            <td class="text-end">${{order.totalPrice}}</td>
+                            <td class="text-end">
+                              <span class="badge badge-warning">{{order.status}}</span>
+                            </td>
+                          </tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        This is a simple Bootstrap modal.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <div class="container mt-4">
+
+        <!-- Product Form -->
+        <div class="card shadow p-3 mb-4" id="addProductForm" *ngIf="showAddProductForm">
+          <div class="card-header bg-primary text-white d-flex justify-content-between">
+            <span>Add New Product</span>
+            <button class="btn btn-sm btn-light" (click)="hideCard()">Cancel</button>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+              <div class="mb-3">
+                <label for="productName" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="productName" required formControlName="name">
+              </div>
+              <div class="mb-3">
+                <label for="productDescription" class="form-label">Description</label>
+                <textarea class="form-control" id="productDescription" rows="3" required formControlName="description"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="productPrice" class="form-label">Price</label>
+                <div class="input-group">
+                  <span class="input-group-text">$</span>
+                  <input type="number" class="form-control" id="productPrice" required formControlName="price">
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="productImage" class="form-label">Image</label>
+                <input type="file" class="form-control" id="productImage" (change)="onFileSelected($event)" required >
+              </div>
+              <div class="text-end">
+                <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Save Product</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+        <!-- User Form -->
+        <div class="card shadow p-3 mb-4" id="addUserForm" *ngIf="showAddUserForm">
+          <div class="card-header bg-secondary text-white d-flex justify-content-between">
+            <span>Add New User</span>
+            <button class="btn btn-sm btn-light" (click)="hideUserCard()">Cancel</button>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="userForm" (ngSubmit)="onSubmitUser()">
+              <div class="mb-3">
+                <label for="userName" class="form-label">Name</label>
+                <input type="text" class="form-control" id="userName" formControlName="username" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="userEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="userEmail" formControlName="email" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="userPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="userPassword" formControlName="password" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="userRole" class="form-label">Role</label>
+                <select class="form-select" id="userRole" formControlName="role" required>
+                  <option value="" disabled selected>Select a role</option>
+                  <option value="USER">USER</option>
+                  <option value="ADMIN">ADMIN</option>
+                </select>
+              </div>
+
+              <div class="text-end">
+                <button type="submit" class="btn btn-secondary" [disabled]="userForm.invalid">Save User</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
       </div>
     </div>
-  </div>
-</div>
+  <!--   Core JS Files   -->
+  <script src="../../../assets/js/core/jquery-3.7.1.min.js"></script>
+  <script src="../../../assets/js/core/popper.min.js"></script>
+  <script src="../../../assets/js/core/bootstrap.min.js"></script>
+
+  <!-- jQuery Scrollbar -->
+  <script src="../../../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+  <!-- Chart JS -->
+  <script src="../../../assets/js/plugin/chart.js/chart.min.js"></script>
+
+  <!-- jQuery Sparkline -->
+  <script src="../../../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+  <!-- Chart Circle -->
+  <script src="../../../assets/js/plugin/chart-circle/circles.min.js"></script>
+
+  <!-- Datatables -->
+  <script src="../../../assets/js/plugin/datatables/datatables.min.js"></script>
+
+  <!-- Bootstrap Notify -->
+  <script src="../../../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+  <!-- jQuery Vector Maps -->
+  <script src="../../../assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+  <script src="../../../assets/js/plugin/jsvectormap/world.js"></script>
+
+  <!-- Sweet Alert -->
+  <script src="../../../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+
+  <!-- Kaiadmin JS -->
+  <script src="../../../assets/js/kaiadmin.min.js"></script>
+
+  <!-- Kaiadmin DEMO methods, don't include it in your project! -->
+  <script src="../../../assets/js/setting-demo.js"></script>
+  <script src="../../../assets/js/demo.js"></script>
+  <script>
+    $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
+      type: "line",
+      height: "70",
+      width: "100%",
+      lineWidth: "2",
+      lineColor: "#177dff",
+      fillColor: "rgba(23, 125, 255, 0.14)",
+    });
+
+    $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
+      type: "line",
+      height: "70",
+      width: "100%",
+      lineWidth: "2",
+      lineColor: "#f3545d",
+      fillColor: "rgba(243, 84, 93, .14)",
+    });
+
+    $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
+      type: "line",
+      height: "70",
+      width: "100%",
+      lineWidth: "2",
+      lineColor: "#ffa534",
+      fillColor: "rgba(255, 165, 52, .14)",
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDxyJxEJZ1F9bSHTI9pD1giMD89"
+          crossorigin="anonymous"></script>
+
+  <script>
+    function showCard(cardId) {
+      document.getElementById(cardId).style.display = 'block';
+      window.scrollTo({ top: document.getElementById(cardId).offsetTop - 20, behavior: 'smooth' });
+    }
+
+    function hideCard(cardId) {
+      document.getElementById(cardId).style.display = 'none';
+    }
+  </script>
+</body>
+
+</html>

@@ -15,19 +15,19 @@ export class LayoutComponent {
 
   }
 
-  // goTocart() {
-  //   if(this.authService.isLoggedIn()){
-  //     this.router.navigate(['/cart']);
-  //   }
-  //   else{
-  //     this.router.navigate(['/login']);
-  //   }
-  // }
+
   checkForLogin(){
     return this.authService.isLoggedIn();
   }
   logOut(){
     this.authService.logout();
+  }
+  checkforRole(){
+    const role =  this.authService.getUserRole();
+    if (role=="USER")
+      return true;
+    else
+      return false;
   }
 
 }
