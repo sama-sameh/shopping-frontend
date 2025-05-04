@@ -113,6 +113,7 @@ export class AdminComponent{
         .subscribe({
           next: (data) => {
             console.log('Product saved successfully');
+            this.productForm.reset();
             console.log(data);
           }, error: (err) => {
             if (err.status === 200) {

@@ -8,7 +8,7 @@
       <form
         (ngSubmit)="onLogin()"
         #form="ngForm">
-        <input type="email" [(ngModel)]="credentials.username" name="email" placeholder="Enter your email" required />
+        <input type="email" [(ngModel)]="credentials.username" name="email" placeholder="Enter your username" required />
         <input type="password" [(ngModel)]="credentials.password" name="password" placeholder="Enter your password" required />
         <a href="#">Forgot password?</a>
         <input type="submit" class="button" value="Login" [disabled]="form.invalid" />

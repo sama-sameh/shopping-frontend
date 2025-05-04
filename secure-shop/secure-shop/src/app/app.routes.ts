@@ -13,17 +13,18 @@ import {CartComponent} from "@pages/cart/cart.component";
 import {CheckoutComponent} from "@pages/checkout/checkout.component";
 import {OrderSuccessComponent} from "@pages/order-success/order-success.component";
 import {ForbiddenComponent} from "@pages/forbidden/forbidden.component";
+import {HomeGuard} from "@core/auth/home.guard";
 
 export const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
     children: [
-      { path: '', component: EndexComponent },
-      { path: 'shop', component: ShopComponent },
-      { path: 'contact', component: ContactComponent },
-      { path: 'why', component: WhyComponent },
-      { path: 'testimonial', component: TestimonialComponent },
+      { path: '', component: EndexComponent, canActivate: [HomeGuard]},
+      { path: 'shop', component: ShopComponent, canActivate: [HomeGuard] },
+      { path: 'contact', component: ContactComponent , canActivate: [HomeGuard]},
+      { path: 'why', component: WhyComponent , canActivate: [HomeGuard]},
+      { path: 'testimonial', component: TestimonialComponent, canActivate: [HomeGuard] },
       {
         path:'cart',
         component: CartComponent,
